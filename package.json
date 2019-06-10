@@ -1,0 +1,41 @@
+{
+  "name": "push-pin-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --verbose --runInBand",
+    "test:watch": "npm run test -- --watch",
+    "start": "node server.js",
+    "start:watch": "nodemon server.js"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/push-pin/push-pin-backend.git"
+  },
+  "keywords": [],
+  "author": "Bonnie McNeil <bonniebmcneil@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/push-pin/push-pin-backend/issues"
+  },
+  "homepage": "https://github.com/push-pin/push-pin-backend#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.5.13",
+    "morgan": "^1.9.1",
+    "superagent": "^5.0.6"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "jest": "^24.8.0",
+    "nodemon": "^1.19.1",
+    "supertest": "^4.0.2"
+  }
+}
