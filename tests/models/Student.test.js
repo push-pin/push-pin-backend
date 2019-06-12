@@ -9,8 +9,6 @@ describe('Student model', () => {
       pastClasses: [new mongoose.Types.ObjectId, new mongoose.Types.ObjectId]
     });
 
-    console.log(student.toJSON());
-
     expect(student.toJSON()).toEqual({
       _id: expect.any(mongoose.Types.ObjectId),
       auth0Id: expect.any(String),
