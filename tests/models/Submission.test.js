@@ -13,6 +13,7 @@ describe('Submission model', () => {
       _id: expect.any(mongoose.Types.ObjectId),
       assignment: expect.any(mongoose.Types.ObjectId),
       submission: 'github.com',
+      comments: [],
       graded: false
     });
   });
