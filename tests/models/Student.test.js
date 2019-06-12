@@ -1,15 +1,22 @@
-const Teacher = require('../../lib/models/Teacher');
+const Student = require('../../lib/models/Student');
 const mongoose = require('mongoose');
 
-describe('Teacher model', () => {
-  it('new Teacher', () => {
-    const teacher = new Teacher({
-      user: '1234567890987654321',
+describe('Student model', () => {
+  it('new Student', () => {
+    const student = new Student({
+      auth0Id: '1234567890987654321',
+      currentClass: new mongoose.Types.ObjectId,
+      pastClasses: [new mongoose.Types.ObjectId, new mongoose.Types.ObjectId]
     });
 
-    expect(teacher.toJSON()).toEqual({
+    console.log(student.toJSON());
+
+    expect(student.toJSON()).toEqual({
       _id: expect.any(mongoose.Types.ObjectId),
-      user: expect.any(String)
+      auth0Id: expect.any(String),
+      currentClass: expect.any(mongoose.Types.ObjectId),
+      pastClasses: [expect.any(mongoose.Types.ObjectId), expect.any(mongoose.Types.ObjectId)],
+      attendance: 0
     });
   });
 });
