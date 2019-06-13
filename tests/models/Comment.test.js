@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Comment = require('../../lib/models/Comment');
+const Comment = require('../../lib/models/assignments/Comment');
 
 describe('Comment model', () => {
   it('new Comment', () => {

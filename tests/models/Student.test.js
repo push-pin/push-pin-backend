@@ -1,4 +1,4 @@
-const Student = require('../../lib/models/Student');
+const Student = require('../../lib/models/profiles/Student');
 const mongoose = require('mongoose');
 
 describe('Student model', () => {

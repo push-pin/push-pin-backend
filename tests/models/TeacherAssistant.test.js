@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const TeacherAssistant = require('../../lib/models/TeacherAssistant');
+const TeacherAssistant = require('../../lib/models/profiles/TeacherAssistant');
 
 describe('TeacherAssistant model', () => {
   it('new TeacherAssistant', () => {

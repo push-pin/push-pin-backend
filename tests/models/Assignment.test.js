@@ -1,4 +1,4 @@
-const Assignment = require('../../lib/models/Assignment');
+const Assignment = require('../../lib/models/assignments/Assignment');
 const mongoose = require('mongoose');
 
 describe('Assignment model', () => {

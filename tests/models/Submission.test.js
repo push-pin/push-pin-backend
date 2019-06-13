@@ -1,4 +1,4 @@
-const Submission = require('../../lib/models/Submission');
+const Submission = require('../../lib/models/assignments/Submission');
 const mongoose = require('mongoose');
 
 describe('Submission model', () => {

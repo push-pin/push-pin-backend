@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Grade = require('../../lib/models/Grade');
+const Grade = require('../../lib/models/assignments/Grade');
 
 describe('Grade model', () => {
   it('new Grade', () => {
