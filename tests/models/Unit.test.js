@@ -1,16 +1,16 @@
-const Class = require('../../lib/models/Class');
+const Unit = require('../../lib/models/Unit');
 const mongoose = require('mongoose');
 
-describe('Class model', () => {
-  it('new Class', () => {
-    const newClass = new Class({
+describe('Unit model', () => {
+  it('new Unit', () => {
+    const newUnit = new Unit({
       course: new mongoose.Types.ObjectId,
       year: '2019',
       startDate: new Date(),
       endDate: new Date(),
     });
 
-    expect(newClass.toJSON()).toEqual({
+    expect(newUnit.toJSON()).toEqual({
       _id: expect.any(mongoose.Types.ObjectId),
       course: expect.any(mongoose.Types.ObjectId),
       year: '2019',
