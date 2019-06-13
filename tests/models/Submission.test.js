@@ -6,12 +6,14 @@ describe('Submission model', () => {
     const submission = new Submission({
       assignment: new mongoose.Types.ObjectId,
       submission: 'github.com',
-      graded: false
+      graded: false,
+      student: new mongoose.Types.ObjectId
     });
 
     expect(submission.toJSON()).toEqual({
       _id: expect.any(mongoose.Types.ObjectId),
       assignment: expect.any(mongoose.Types.ObjectId),
+      student: expect.any(mongoose.Types.ObjectId),
       submission: 'github.com',
       comments: [],
       graded: false
