@@ -6,6 +6,8 @@ const connect = require('../../lib/utils/connect');
 
 beforeAll(() => connect());
 
+beforeEach(() => mongoose.connection.dropDatabase());
+
 afterAll(() => mongoose.connection.close());
 
 describe('User model', () => {
