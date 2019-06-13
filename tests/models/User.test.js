@@ -44,7 +44,10 @@ describe('User model', () => {
             expect(foundStudent).toEqual({
               ...student.toJSON(),
               firstName: user.firstName,
-              lastName: user.lastName
+              lastName: user.lastName,
+              role: user.role,
+              userId: user._id,
+              auth0id: user.auth0id
             });
           });
       });
