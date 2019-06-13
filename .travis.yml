@@ -1,3 +1,10 @@
 language: node_js
-node_js: "node"
+node_js: node
 services: mongodb
+env: MONGODB_URI=mongodb://localhost:27017/pushpin
+deploy:
+  provider: heroku
+  app: pushpinlms
+  api_key:
+    secure: D1/ugnU7OysZXql9HSIId35hpp6T1/fMwls35Jrj0ZxDzT8S4yuZVbX7y1o3H8BqEWUebbAGdh8G/Da6hCF/VpjW790RtIJB/exw2V+FvsCgMYG8dEwYZKW0W1c8b7Sb2cwvvrilW9j3GBV/BPwSe/AMiqqlhHt5oLNtcQPe8d/zr2t1MegmfZDJyJebNV928TownHBU4BxQLmGhov05Phb1p4bXqiCqxVjU9z1yXJ/XWFxsBHko/i0MAOrLWCSCN1LoUgYjAAaXgxUo5rQ09Ds1tMJocW8VrI3ROGMoLu2JHLdZY2lhn879lJveu4wH0SXWytoORaqNCLm83n8ENakSrlV5BVJrKhPIQWVb3F29mjHCSSdUcfaybFQZ6fLAzX1LXYaC/xkaVURFdxfc0DUsd6+asLjXZVZsSHiD9rcbnRHTBPF4aqNvH3HJfmi7KMCOJ7Iqq4ozmEJlWLGcna/pJbf7mXXuzWoYVka86bvb4fc2cLE8+w23VhgZRsrW45eeWFgNuh8Mw0fVosJU65delrovsUScIYPKEHDXWPik3V0Ct5AbdJddHfvgNfg+exaJCAAo5M/C3zGjdazvqO9vu3D/BZ/Ha3iQJGcrwtkXDmjEU6ZpHP4YmCdMMMuOOSlV6YZ9pmyZOtmSDL4wOqorzqZjfY/hbuaXVf8AVD0=
+
