@@ -3,6 +3,7 @@ const app = require('../../lib/app');
 require('dotenv').config();
 const mongoose = require('mongoose');
 const connect = require('../../lib/utils/connect');
+const { seedStudents } = require('../utils/seed-data');
 
 jest.mock('../../lib/middleware/ensure-auth.js');
 
@@ -34,6 +35,14 @@ describe('student route tests', () => {
           '_id': expect.any(String)
         });
       });
+  });
+
+  it('gets all students', () => {
+    return seedStudents()
+      .then(res => {
+        console.log(res);
+        expect(res).toHaveLength(10);
+      })
   });
 
 });

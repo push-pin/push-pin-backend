@@ -37,8 +37,8 @@ describe('User model', () => {
     });
     return Student.create({
       userId: user._id,
-      currentClass: new mongoose.Types.ObjectId,
-      pastClasses: [new mongoose.Types.ObjectId, new mongoose.Types.ObjectId]
+      currentCourse: new mongoose.Types.ObjectId,
+      pastCourses: [new mongoose.Types.ObjectId, new mongoose.Types.ObjectId]
     })
       .then(student => {
         return user.getProfile()
