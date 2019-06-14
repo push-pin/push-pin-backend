@@ -29,7 +29,7 @@ describe('student route tests', () => {
           'lastName': 'McNeil',
           'email': 'bonnie1@gmail.com',
           'userId': expect.any(String),
-          'pastClasses': [],
+          'pastCourses': [],
           'attendance': 0,
           '_id': expect.any(String)
         });
