@@ -14,11 +14,11 @@ beforeEach(() => seedTAs());
 
 afterAll(() => mongoose.connection.close());
 
-describe('teacher assistant route tests', () => {
+describe('admin route tests', () => {
 
   it('signs up a new ta', () => {
     return request(app)
-      .post('/api/v1/admin/')
+      .post('/api/v1/admin/ta')
       .send({
         'auth0id': '1234567890',
         'firstName': 'Bonnie',
@@ -32,6 +32,28 @@ describe('teacher assistant route tests', () => {
           'email': 'bonnie1@gmail.com',
           'user': expect.any(String),
           'pastCourses': [],
+          '_id': expect.any(String)
+        });
+      });
+  });
+
+  it('sign up a new teacher', () => {
+    return request(app)
+      .post('/api/v1/admin/teacher')
+      .send({
+        'auth0id': '1234567890',
+        'firstName': 'Bonnie',
+        'lastName': 'McNeil',
+        'email': 'bonnie3@gmail.com',
+        'currentCourse': new mongoose.Types.ObjectId
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          'firstName': 'Bonnie',
+          'lastName': 'McNeil',
+          'email': 'bonnie3@gmail.com',
+          'user': expect.any(String),
+          'courses': [expect.any(String)],
           '_id': expect.any(String)
         });
       });
