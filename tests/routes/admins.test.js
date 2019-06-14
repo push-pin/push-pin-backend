@@ -59,5 +59,20 @@ describe('admin route tests', () => {
       });
   });
 
+  it.only('gets a list of teaching assistants', () => {
+    return request(app)
+      .get('/api/v1/admin/ta')
+      .then(res => {
+        console.log(res.body[0]);
+        expect(res.body).toHaveLength(10);
+        expect(res.body[0]).toEqual({
+          _id: expect.any(String),
+          user: expect.any(Object),
+          pastCourses: [expect.any(Object), expect.any(Object)],
+          currentCourse: expect.any(Object)
+        }); 
+      });
+  });
+
 
 });
