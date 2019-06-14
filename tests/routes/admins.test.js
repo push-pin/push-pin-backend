@@ -18,7 +18,7 @@ describe('teacher assistant route tests', () => {
 
   it('signs up a new ta', () => {
     return request(app)
-      .post('/api/v1/ta/')
+      .post('/api/v1/admin/')
       .send({
         'auth0id': '1234567890',
         'firstName': 'Bonnie',
@@ -35,7 +35,7 @@ describe('teacher assistant route tests', () => {
           '_id': expect.any(String)
         });
       });
-  })
+  });
 
 
 });
