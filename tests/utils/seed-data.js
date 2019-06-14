@@ -34,7 +34,7 @@ async function seedStudents(studentCount = 10) {
   const users = await seedUsers(studentCount, STUDENT);
   const courses = seedCourses(); 
   const students = [...Array(studentCount)].map((_, i) => ({
-    userId: users[i]._id,
+    user: users[i]._id,
     currentCourse: chance.pickone(courses),
     pastCourses: [chance.pickone(courses), chance.pickone(courses)]
   }));
@@ -45,7 +45,7 @@ async function seedTeachers(teacherCount = 10) {
   const users = await seedUsers(teacherCount, TEACHER);
   const courses = seedCourses(); 
   const teachers = [...Array(teacherCount)].map((_, i) => ({
-    userId: users[i]._id,
+    user: users[i]._id,
     courses: [chance.pickone(courses), chance.pickone(courses)]
   }));
   return Teacher.create(teachers);
@@ -55,7 +55,7 @@ async function seedTAs(taCount = 10) {
   const users = await seedUsers(taCount, TA);
   const courses = seedCourses(); 
   const tas = [...Array(taCount)].map((_, i) => ({
-    userId: users[i]._id,
+    user: users[i]._id,
     currentCourse: chance.pickone(courses),
     pastCourses: [chance.pickone(courses), chance.pickone(courses)]
   }));

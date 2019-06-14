@@ -36,7 +36,7 @@ describe('User model', () => {
       lastName: 'Gosling'
     });
     return Student.create({
-      userId: user._id,
+      user: user._id,
       currentCourse: new mongoose.Types.ObjectId,
       pastCourses: [new mongoose.Types.ObjectId, new mongoose.Types.ObjectId]
     })
@@ -48,7 +48,7 @@ describe('User model', () => {
               firstName: user.firstName,
               lastName: user.lastName,
               role: user.role,
-              userId: user._id,
+              user: user._id,
               auth0id: user.auth0id
             });
           });
