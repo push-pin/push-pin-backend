@@ -23,14 +23,16 @@ describe('student route tests', () => {
         'auth0id': '1234567890',
         'firstName': 'Bonnie',
         'lastName': 'McNeil',
-        'email': 'bonnie1@gmail.com'
+        'email': 'bonnie89@gmail.com',
+        'grader': new mongoose.Types.ObjectId
       })
       .then(res => {
         expect(res.body).toEqual({
           'firstName': 'Bonnie',
           'lastName': 'McNeil',
-          'email': 'bonnie1@gmail.com',
+          'email': 'bonnie89@gmail.com',
           'user': expect.any(String),
+          'grader': expect.any(String),
           'pastCourses': [],
           'attendance': 0,
           '_id': expect.any(String)

@@ -19,6 +19,7 @@ describe('Resource model', () => {
       course: expect.any(mongoose.Types.ObjectId),
       type: 'video',
       description: 'this is a neat video',
+      active: true,
       info: {
         // link: '',
         // image: '',

@@ -15,7 +15,6 @@ describe('Submission model', () => {
       assignment: expect.any(mongoose.Types.ObjectId),
       student: expect.any(mongoose.Types.ObjectId),
       submission: 'github.com',
-      comments: [],
       graded: false
     });
   });

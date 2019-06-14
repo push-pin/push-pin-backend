@@ -14,6 +14,7 @@ describe('Assignment model', () => {
     expect(assignment.toJSON()).toEqual({
       _id: expect.any(mongoose.Types.ObjectId),
       type: 'solo',
+      active: true,
       instructions: 'Do this work',
       dateAvailable: expect.any(Date),
       dateDue: expect.any(Date),

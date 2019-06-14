@@ -15,6 +15,7 @@ describe('Course model', () => {
       _id: expect.any(mongoose.Types.ObjectId),
       name: 'Fullstack JavaScript',
       term: 'Spring 2019',
+      active: true,
       startDate: expect.any(Date),
       endDate: expect.any(Date),
       courseType: 'CareerTrack'

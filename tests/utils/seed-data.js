@@ -34,10 +34,12 @@ async function seedCourses(courseCount = 4) {
 async function seedStudents(studentCount = 10) {
   const users = await seedUsers(studentCount, STUDENT);
   const courses = await seedCourses(); 
+  const TAs = await seedTAs();
   const students = [...Array(studentCount)].map((_, i) => ({
     user: users[i]._id,
     currentCourse: chance.pickone(courses),
-    pastCourses: [chance.pickone(courses), chance.pickone(courses)]
+    pastCourses: [chance.pickone(courses), chance.pickone(courses)],
+    grader: chance.pickone(TAs)
   }));
   return Student.create(students);
 }
