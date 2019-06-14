@@ -73,7 +73,7 @@ describe('admin route tests', () => {
       });
   });
 
-  it.only('updates a teaching assistant\'s current course', () => {
+  it('updates a teaching assistant\'s current course', () => {
     return request(app)
       .post('/api/v1/admin/ta')
       .send({
