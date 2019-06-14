@@ -59,11 +59,10 @@ describe('admin route tests', () => {
       });
   });
 
-  it.only('gets a list of teaching assistants', () => {
+  it('gets a list of teaching assistants', () => {
     return request(app)
       .get('/api/v1/admin/ta')
       .then(res => {
-        console.log(res.body[0]);
         expect(res.body).toHaveLength(10);
         expect(res.body[0]).toEqual({
           _id: expect.any(String),
@@ -71,6 +70,34 @@ describe('admin route tests', () => {
           pastCourses: [expect.any(Object), expect.any(Object)],
           currentCourse: expect.any(Object)
         }); 
+      });
+  });
+
+  it.only('updates a teaching assistant\'s current course', () => {
+    return request(app)
+      .post('/api/v1/admin/ta')
+      .send({
+        'auth0id': '1234567890',
+        'firstName': 'Bonnie',
+        'lastName': 'McNeil',
+        'email': 'bonnie10@gmail.com',
+        'currentCourse': new mongoose.Types.ObjectId
+      })
+      .then(res => res.body)
+      .then(newTA => {
+        return request(app)
+          .patch(`/api/v1/admin/ta/${newTA._id}`)
+          .send({
+            newCourse: new mongoose.Types.ObjectId
+          })
+          .then(res => {
+            expect(res.body).toEqual({
+              'user': expect.any(String),
+              'currentCourse': expect.any(String),
+              'pastCourses': [newTA.currentCourse],
+              '_id': expect.any(String)
+            });
+          });
       });
   });
 
