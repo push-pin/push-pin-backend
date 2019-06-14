@@ -20,12 +20,13 @@ function seedUsers(userCount = 10, type) {
 }
 
 async function seedCourses(courseCount = 4) {
+  const courseTypes = ['BootCamp1', 'BootCamp2', 'CareerTrack']
   const courses = [...Array(courseCount)].map(() => ({
     name: `JavaScript ${chance.profession()}`,
     term: `Spring ${chance.year()}`,
     startDate: chance.date(),
     endDate: chance.date(),
-    courseType: 'CareerTrack'
+    courseType: chance.pickone(courseTypes)
   }));
   return await Course.create(courses);
 }
@@ -60,6 +61,10 @@ async function seedTAs(taCount = 10) {
     pastCourses: [chance.pickone(courses), chance.pickone(courses)]
   }));
   return TeacherAssistant.create(tas);
+}
+
+async function seedAsses(assCount = 100) {
+  
 }
 
 module.exports = {
