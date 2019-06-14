@@ -4,14 +4,14 @@ const mongoose = require('mongoose');
 describe('Teacher model', () => {
   it('new teacher', () => {
     const teacher = new Teacher({
-      userId: new mongoose.Types.ObjectId,
-      classes: [new mongoose.Types.ObjectId, new mongoose.Types.ObjectId]
+      user: new mongoose.Types.ObjectId,
+      courses: [new mongoose.Types.ObjectId, new mongoose.Types.ObjectId]
     });
 
     expect(teacher.toJSON()).toEqual({
       _id: expect.any(mongoose.Types.ObjectId),
-      userId: expect.any(mongoose.Types.ObjectId),
-      classes: [expect.any(mongoose.Types.ObjectId), expect.any(mongoose.Types.ObjectId)]
+      user: expect.any(mongoose.Types.ObjectId),
+      courses: [expect.any(mongoose.Types.ObjectId), expect.any(mongoose.Types.ObjectId)]
     });
   });
 });
