@@ -38,6 +38,7 @@ describe('User model', () => {
     return Student.create({
       user: user._id,
       currentCourse: new mongoose.Types.ObjectId,
+      grader: new mongoose.Types.ObjectId,
       pastCourses: [new mongoose.Types.ObjectId, new mongoose.Types.ObjectId]
     })
       .then(student => {
@@ -51,7 +52,7 @@ describe('User model', () => {
               user: user._id,
               auth0id: user.auth0id
             });
-          });
+          }); 
       });
   });
 

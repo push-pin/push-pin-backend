@@ -4,14 +4,16 @@ const Student = require('../../lib/models/profiles/Student');
 const Teacher = require('../../lib/models/profiles/Teacher');
 const TeacherAssistant = require('../../lib/models/profiles/TeacherAssistant');
 const Course = require('../../lib/models/Course');
+const Assignment = require('../../lib/models/assignments/Assignment');
+const Submission = require('../../lib/models/assignments/Submission');
+const Grade = require('../../lib/models/assignments/Grade');
+const Comment = require('../../lib/models/assignments/Comment');
 const { TEACHER, TA, STUDENT } = require('../../lib/models/userRoles');
 
-jest.mock('../../lib/middleware/ensure-auth.js');
-
-function seedUsers(userCount = 10, type) {
+function seedUsers(userCount = 10, ...type) {
   const users = [...Array(userCount)].map(() => ({
     auth0id: chance.word(),
-    role: type,
+    role: chance.pickone(type),
     firstName: chance.name(),
     lastName: chance.animal(),
     email: chance.email()
@@ -20,7 +22,7 @@ function seedUsers(userCount = 10, type) {
 }
 
 async function seedCourses(courseCount = 4) {
-  const courseTypes = ['BootCamp1', 'BootCamp2', 'CareerTrack']
+  const courseTypes = ['BootCamp1', 'BootCamp2', 'CareerTrack'];
   const courses = [...Array(courseCount)].map(() => ({
     name: `JavaScript ${chance.profession()}`,
     term: `Spring ${chance.year()}`,
@@ -34,10 +36,12 @@ async function seedCourses(courseCount = 4) {
 async function seedStudents(studentCount = 10) {
   const users = await seedUsers(studentCount, STUDENT);
   const courses = await seedCourses(); 
+  const TAs = await seedUsers(4, TA);
   const students = [...Array(studentCount)].map((_, i) => ({
     user: users[i]._id,
     currentCourse: chance.pickone(courses),
-    pastCourses: [chance.pickone(courses), chance.pickone(courses)]
+    pastCourses: [chance.pickone(courses), chance.pickone(courses)],
+    grader: chance.pickone(TAs)
   }));
   return Student.create(students);
 }
@@ -63,8 +67,55 @@ async function seedTAs(taCount = 10) {
   return TeacherAssistant.create(tas);
 }
 
-async function seedAsses(assCount = 100) {
-  
+async function seedAsses(assCount = 20) {
+  const courses = await seedCourses();
+  const types = ['reading', 'solo', 'mob'];
+  const asses = [...Array(assCount)].map(() => ({
+    courseId: chance.pickone(courses),
+    type: chance.pickone(types),
+    title: chance.word(),
+    instructions: chance.sentence(),
+    dateAvailable: chance.date(),
+    dateDue: chance.date(),
+    dateClosed: chance.date()
+  }));
+  return Assignment.create(asses);
+}
+
+async function seedSubmissions(count = 100) {
+  const asses = await seedAsses(10);
+  const users = await seedUsers(10, STUDENT);
+  const subs = [...Array(count)].map(() => ({
+    assignment: chance.pickone(asses),
+    student: chance.pickone(users),
+    submission: chance.sentence()
+  }));
+  return Submission.create(subs);
+}
+
+async function seedGrades(count = 100) {
+  const graders = await seedUsers(5, TA);
+  const subs = await seedSubmissions(count);
+  const grades = [...Array(count)].map((_, i) => ({
+    submission: subs[i],
+    grade: chance.integer({ min: 0, max: 110 }),
+    grader: chance.pickone(graders)
+  }));
+  return Grade.create(grades);
+}
+
+async function seedComments(count = 25) {
+  const users = await seedUsers(5, TA);
+  const subs = await seedSubmissions(5);
+  const comments = [...Array(count)].map(() => {
+    const submission = chance.pickone(subs);
+    return {
+      submission,
+      comment: chance.sentence(),
+      commenter: chance.pickone([...users, submission.student])
+    };
+  });
+  return Comment.create(comments);
 }
 
 module.exports = {
@@ -72,5 +123,9 @@ module.exports = {
   seedTAs,
   seedTeachers,
   seedUsers,
-  seedCourses
+  seedCourses,
+  seedAsses,
+  seedSubmissions,
+  seedGrades,
+  seedComments
 };
