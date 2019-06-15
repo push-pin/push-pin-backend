@@ -7,9 +7,8 @@ const Course = require('../../lib/models/Course');
 const Assignment = require('../../lib/models/assignments/Assignment');
 const Submission = require('../../lib/models/assignments/Submission');
 const Grade = require('../../lib/models/assignments/Grade');
+const Comment = require('../../lib/models/assignments/Comment');
 const { TEACHER, TA, STUDENT } = require('../../lib/models/userRoles');
-
-jest.mock('../../lib/middleware/ensure-auth.js');
 
 function seedUsers(userCount = 10, ...type) {
   const users = [...Array(userCount)].map(() => ({
@@ -23,7 +22,7 @@ function seedUsers(userCount = 10, ...type) {
 }
 
 async function seedCourses(courseCount = 4) {
-  const courseTypes = ['BootCamp1', 'BootCamp2', 'CareerTrack']
+  const courseTypes = ['BootCamp1', 'BootCamp2', 'CareerTrack'];
   const courses = [...Array(courseCount)].map(() => ({
     name: `JavaScript ${chance.profession()}`,
     term: `Spring ${chance.year()}`,
@@ -37,7 +36,7 @@ async function seedCourses(courseCount = 4) {
 async function seedStudents(studentCount = 10) {
   const users = await seedUsers(studentCount, STUDENT);
   const courses = await seedCourses(); 
-  const TAs = await seedTAs();
+  const TAs = await seedUsers(4, TA);
   const students = [...Array(studentCount)].map((_, i) => ({
     user: users[i]._id,
     currentCourse: chance.pickone(courses),
@@ -96,10 +95,10 @@ async function seedSubmissions(count = 100) {
 
 async function seedGrades(count = 100) {
   const graders = await seedUsers(5, TA);
-  const subs = await seedSubs(count);
+  const subs = await seedSubmissions(count);
   const grades = [...Array(count)].map((_, i) => ({
     submission: subs[i],
-    grade: chance.integer({ min: 0, max, 110 }),
+    grade: chance.integer({ min: 0, max: 110 }),
     grader: chance.pickone(graders)
   }));
   return Grade.create(grades);
@@ -114,8 +113,9 @@ async function seedComments(count = 25) {
       submission,
       comment: chance.sentence(),
       commenter: chance.pickone([...users, submission.student])
-    }
+    };
   });
+  return Comment.create(comments);
 }
 
 module.exports = {
