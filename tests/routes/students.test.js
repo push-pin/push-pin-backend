@@ -4,15 +4,7 @@ const app = require('../../lib/app');
 const mongoose = require('mongoose');
 const connect = require('../../lib/utils/connect');
 const { 
-  seedStudents,
-  // seedTAs,
-  // seedTeachers,
-  // seedUsers,
-  seedCourses,
-  // seedAsses,
-  // seedSubmissions,
-  // seedGrades,
-  // seedComments
+  seedStudents
 } = require('../utils/seed-data');
 
 jest.mock('../../lib/middleware/ensure-auth.js');
@@ -21,14 +13,7 @@ beforeAll(() => connect());
 
 beforeEach(() => mongoose.connection.dropDatabase());
 beforeEach(async() => {
-  return await Promise.all([seedStudents(), seedCourses()]);
-  // seedTAs();
-  // seedTeachers();
-  // seedUsers(10, 'teacher', 'ta', 'student');
-  // seedAsses();
-  // seedSubmissions();
-  // seedGrades();
-  // seedComments();
+  return await Promise.all([seedStudents()]);
 });
 
 afterAll(() => mongoose.connection.close());
