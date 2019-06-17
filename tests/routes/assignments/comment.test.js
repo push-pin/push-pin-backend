@@ -11,7 +11,6 @@ jest.mock('../../../lib/middleware/ensure-auth.js');
 beforeAll(() => connect());
 
 beforeEach(() => mongoose.connection.dropDatabase());
-beforeEach(() => seedSubmissions());
 beforeEach(() => seedComments());
 
 afterAll(() => mongoose.connection.close());
@@ -40,13 +39,12 @@ describe('comment route tests', () => {
 
   it('gets comments by submission id', async() => {
     const submission = await Submission.findOne();
-    console.log(submission._id);
-    const find = await request(app)
-      .post(`/api/v1/comments/${submission._id}`)
+    
+    return request(app)
+      .get(`/api/v1/comments/${submission._id}`)
       .then(res => {
         expect(res.body).toEqual(expect.any(Array));
       });
-    return find;
   });
 });
 
