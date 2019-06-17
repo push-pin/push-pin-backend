@@ -43,7 +43,6 @@ describe('comment route tests', () => {
     return request(app)
       .get(`/api/v1/comments/${submission._id}`)
       .then(res => {
-        console.log(res.body);
         expect(res.body).toEqual(expect.any(Array));
         expect(res.body[0]).toEqual({
           _id: expect.any(String),
