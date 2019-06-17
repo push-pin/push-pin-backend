@@ -1,11 +1,11 @@
-const request = require('supertest');
-const app = require('../../lib/app');
 require('dotenv').config();
+const request = require('supertest');
+const app = require('../../../lib/app');
 const mongoose = require('mongoose');
-const connect = require('../../lib/utils/connect');
-const { seedTAs } = require('../utils/seed-data');
+const connect = require('../../../lib/utils/connect');
+const { seedTAs } = require('../../utils/seed-data');
 
-jest.mock('../../lib/middleware/ensure-auth.js');
+jest.mock('../../../lib/middleware/ensure-auth.js');
 
 beforeAll(() => connect());
 
