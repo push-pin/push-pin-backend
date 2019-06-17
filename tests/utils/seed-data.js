@@ -120,7 +120,6 @@ async function seedComments(count = 25) {
 }
 
 async function seedResources(count = 10) {
-  console.log('hi');
   const users = await seedUsers(5, STUDENT);
   const courses = await seedCourses();
   const resources = [...Array(count)].map(() => ({
