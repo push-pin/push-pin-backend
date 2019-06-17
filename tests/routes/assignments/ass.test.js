@@ -14,9 +14,9 @@ beforeEach(() => seedTAs());
 
 afterAll(() => mongoose.connection.close());
 
-describe('admin route tests', () => {
+describe('ass route tests', () => {
 
-  it('signs up a new ta', () => {
+  it('create new ass', () => {
     return request(app)
       .post('/api/v1/assignments')
       .send({
