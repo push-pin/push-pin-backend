@@ -1,13 +1,13 @@
 require('dotenv').config();
 const request = require('supertest');
-const app = require('../../lib/app');
+const app = require('../../../lib/app');
 const mongoose = require('mongoose');
-const connect = require('../../lib/utils/connect');
+const connect = require('../../../lib/utils/connect');
 const { 
   seedStudents
-} = require('../utils/seed-data');
+} = require('../../utils/seed-data');
 
-jest.mock('../../lib/middleware/ensure-auth.js');
+jest.mock('../../../lib/middleware/ensure-auth.js');
 
 beforeAll(() => connect());
 
