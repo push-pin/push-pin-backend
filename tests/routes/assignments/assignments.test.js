@@ -50,7 +50,7 @@ describe('assignment route tests', () => {
   it('gets all active assignments for a course', async() => {
     const course = await Course.find();
     return request(app)
-      .get(`/api/v1/assignments/${course[0]._id}`)
+      .get(`/api/v1/assignments/course/${course[0]._id}`)
       .then(res => {
         expect(res.body).toHaveLength(20);
         expect(res.body[0]).toEqual({
@@ -66,6 +66,6 @@ describe('assignment route tests', () => {
         });
       });
 
-  })
+  });
 
 });
