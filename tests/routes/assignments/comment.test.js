@@ -3,7 +3,7 @@ const request = require('supertest');
 const app = require('../../../lib/app');
 const mongoose = require('mongoose');
 const connect = require('../../../lib/utils/connect');
-const { seedSubmissions, seedComments } = require('../../utils/seed-data');
+const { seedComments } = require('../../utils/seed-data');
 const Submission = require('../../../lib/models/assignments/Submission');
 
 jest.mock('../../../lib/middleware/ensure-auth.js');
@@ -44,6 +44,14 @@ describe('comment route tests', () => {
       .get(`/api/v1/comments/${submission._id}`)
       .then(res => {
         expect(res.body).toEqual(expect.any(Array));
+        expect(res.body[0]).toEqual({
+          _id: expect.any(String),
+          submission: expect.any(String),
+          comment: expect.any(String),
+          commenter: expect.any(String),
+          updatedAt: expect.any(String),
+          createdAt: expect.any(String)
+        });
       });
   });
 });
