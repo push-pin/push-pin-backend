@@ -57,7 +57,7 @@ describe('resource route tests', () => {
   });
 
   it('gets inactive/archived resources', async() => {
-    await  Resource.create({
+    await Resource.create({
       course: new mongoose.Types.ObjectId,
       user: new mongoose.Types.ObjectId,
       type: 'video',
