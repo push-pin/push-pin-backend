@@ -10,7 +10,9 @@ jest.mock('../../../lib/middleware/ensure-auth.js');
 beforeAll(() => connect());
 
 beforeEach(() => mongoose.connection.dropDatabase());
-beforeEach(() => seedTAs());
+beforeEach(async() => {
+  return await Promise.all([seedTAs()]);
+});
 
 afterAll(() => mongoose.connection.close());
 
