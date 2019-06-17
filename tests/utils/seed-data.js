@@ -84,8 +84,8 @@ async function seedAsses(assCount = 20) {
 }
 
 async function seedSubmissions(count = 100) {
-  const asses = await seedAsses(10);
-  const users = await seedUsers(10, STUDENT);
+  const asses = await seedAsses(1);
+  const users = await seedUsers(1, STUDENT);
   const subs = [...Array(count)].map(() => ({
     assignment: chance.pickone(asses),
     student: chance.pickone(users),
