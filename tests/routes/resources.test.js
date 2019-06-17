@@ -57,7 +57,7 @@ describe('resource route tests', () => {
   });
 
   it('gets inactive/archived resources', async() => {
-    const res1 = await  Resource.create({
+    await  Resource.create({
       course: new mongoose.Types.ObjectId,
       user: new mongoose.Types.ObjectId,
       type: 'video',
@@ -67,7 +67,7 @@ describe('resource route tests', () => {
       },
       active: false
     });
-    const res2 = await Resource.create({
+    await Resource.create({
       course: new mongoose.Types.ObjectId,
       user: new mongoose.Types.ObjectId,
       type: 'link',
@@ -140,7 +140,7 @@ describe('resource route tests', () => {
         });
       });
   });
-  
+
   it('deletes a resource by id (sets active: false)', async() => {
     const res1 = await Resource.create({
       course: new mongoose.Types.ObjectId,

@@ -11,7 +11,8 @@ const {
   seedAsses,
   seedSubmissions,
   seedGrades,
-  seedComments
+  seedComments,
+  seedResources
 } = require('../utils/seed-data');
 
 
@@ -27,7 +28,8 @@ async function seed() {
     seedAsses(),
     seedSubmissions(),
     seedGrades(),
-    seedComments()
+    seedComments(),
+    seedResources()
   ]);
   await mongoose.connection.close();
 
