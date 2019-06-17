@@ -7,3 +7,10 @@ const { seedAsses } = require('../../utils/seed-data');
 const Assignment = require('../../../lib/models/assignments/Assignment');
 const Course = require('../../../lib/models/Course');
 
+describe('grade route tests', () => {
+
+  it('is a dummy test', () => {
+
+  });
+
+});
