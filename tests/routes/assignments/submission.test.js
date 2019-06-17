@@ -4,6 +4,7 @@ const app = require('../../../lib/app');
 const mongoose = require('mongoose');
 const connect = require('../../../lib/utils/connect');
 const Assignment = require('../../../lib/models/assignments/Assignment');
+const User = require('../../../lib/models/profiles/User');
 const { seedSubmissions } = require('../../utils/seed-data');
 
 jest.mock('../../../lib/middleware/ensure-auth.js');
@@ -18,19 +19,22 @@ afterAll(() => mongoose.connection.close());
 describe('submission route tests', () => {
 
   it('creates new submission', async() => {
+    const ass = await Assignment.findOne();
+    const user = await User.findOne();
     return request(app)
-      .post('/api/v1/submission')
+      .post('/api/v1/submissions')
       .send({
-        assignment: '5d07daa819015fc89b61d1c8',
-        student: 'commment comment',
-        submission: '5d07d90e12c04fc829e40fbe',
+        assignment: ass._id,
+        student: user._id,
+        submission: 'heres my cool work i did',
       })
       .then(res => {
         expect(res.body).toEqual({
+          graded: false,
           _id: expect.any(String),
-          submission: '5d07daa819015fc89b61d1c8',
-          comment: 'commment comment',
-          commenter: '5d07d90e12c04fc829e40fbe',
+          assignment: expect.any(String),
+          student: expect.any(String),
+          submission: expect.any(String),
           updatedAt: expect.any(String),
           createdAt: expect.any(String)
         });
