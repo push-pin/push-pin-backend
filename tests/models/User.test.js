@@ -24,7 +24,8 @@ describe('User model', () => {
       auth0id: '12345678', 
       role: 'teacher',
       firstName: 'Ryan',
-      lastName: 'Gosling'
+      lastName: 'Gosling',
+      image: '../..//assets/placeholder.png'
     });
   });
 
