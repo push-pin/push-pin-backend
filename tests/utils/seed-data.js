@@ -72,7 +72,7 @@ async function seedAsses(assCount = 20) {
   const courses = await seedCourses();
   const types = ['reading', 'solo', 'mob'];
   const asses = [...Array(assCount)].map(() => ({
-    courseId: chance.pickone(courses),
+    course: chance.pickone(courses),
     type: chance.pickone(types),
     title: chance.word(),
     instructions: chance.sentence(),

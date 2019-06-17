@@ -6,6 +6,7 @@ describe('Assignment model', () => {
     const assignment = new Assignment({
       type: 'solo',
       instructions: 'Do this work',
+      course: new mongoose.Types.ObjectId,
       dateAvailable: new Date(),
       dateDue: new Date(),
       dateClosed: new Date()
@@ -16,6 +17,7 @@ describe('Assignment model', () => {
       type: 'solo',
       active: true,
       instructions: 'Do this work',
+      course: expect.any(mongoose.Types.ObjectId),
       dateAvailable: expect.any(Date),
       dateDue: expect.any(Date),
       dateClosed: expect.any(Date)
