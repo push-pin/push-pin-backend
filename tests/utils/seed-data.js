@@ -4,6 +4,7 @@ const Student = require('../../lib/models/profiles/Student');
 const Teacher = require('../../lib/models/profiles/Teacher');
 const TeacherAssistant = require('../../lib/models/profiles/TeacherAssistant');
 const Course = require('../../lib/models/Course');
+const Resource = require('../../lib/models/Resource');
 const Assignment = require('../../lib/models/assignments/Assignment');
 const Submission = require('../../lib/models/assignments/Submission');
 const Grade = require('../../lib/models/assignments/Grade');
@@ -68,10 +69,10 @@ async function seedTAs(taCount = 10) {
 }
 
 async function seedAsses(assCount = 20) {
-  const courses = await seedCourses();
+  const courses = await seedCourses(1);
   const types = ['reading', 'solo', 'mob'];
   const asses = [...Array(assCount)].map(() => ({
-    courseId: chance.pickone(courses),
+    course: chance.pickone(courses),
     type: chance.pickone(types),
     title: chance.word(),
     instructions: chance.sentence(),
@@ -118,6 +119,19 @@ async function seedComments(count = 25) {
   return Comment.create(comments);
 }
 
+async function seedResources(count = 10) {
+  const users = await seedUsers(5, STUDENT);
+  const courses = await seedCourses();
+  const resources = [...Array(count)].map(() => ({
+    course: chance.pickone(courses),
+    user: chance.pickone(users),
+    type: chance.pickone(['video', 'link', 'image']),
+    description: chance.sentence(),
+    info: { hi: 'there' }
+  }));
+  return Resource.create(resources);
+}
+
 module.exports = {
   seedStudents,
   seedTAs,
@@ -127,5 +141,6 @@ module.exports = {
   seedAsses,
   seedSubmissions,
   seedGrades,
-  seedComments
+  seedComments,
+  seedResources
 };

@@ -5,6 +5,7 @@ describe('Resource model', () => {
   it('new Resource', () => {
     const resource = new Resource({
       course: new mongoose.Types.ObjectId,
+      user: new mongoose.Types.ObjectId,
       type: 'video',
       description: 'this is a neat video',
       info: {
@@ -17,6 +18,7 @@ describe('Resource model', () => {
     expect(resource.toJSON()).toEqual({
       _id: expect.any(mongoose.Types.ObjectId),
       course: expect.any(mongoose.Types.ObjectId),
+      user: expect.any(mongoose.Types.ObjectId),
       type: 'video',
       description: 'this is a neat video',
       active: true,
