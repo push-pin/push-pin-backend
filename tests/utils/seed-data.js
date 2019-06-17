@@ -69,7 +69,7 @@ async function seedTAs(taCount = 10) {
 }
 
 async function seedAsses(assCount = 20) {
-  const courses = await seedCourses();
+  const courses = await seedCourses(1);
   const types = ['reading', 'solo', 'mob'];
   const asses = [...Array(assCount)].map(() => ({
     course: chance.pickone(courses),

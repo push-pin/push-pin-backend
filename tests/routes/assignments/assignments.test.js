@@ -4,7 +4,8 @@ const app = require('../../../lib/app');
 const mongoose = require('mongoose');
 const connect = require('../../../lib/utils/connect');
 const { seedAsses } = require('../../utils/seed-data');
-const Assignments = require('../../../lib/models/assignments/Assignment');
+const Assignment = require('../../../lib/models/assignments/Assignment');
+const Course = require('../../../lib/models/Course');
 
 jest.mock('../../../lib/middleware/ensure-auth.js');
 
@@ -45,5 +46,26 @@ describe('assignment route tests', () => {
         });
       });
   });
+
+  it('gets all active assignments for a course', async() => {
+    const course = await Course.find();
+    return request(app)
+      .get(`/api/v1/assignments/${course[0]._id}`)
+      .then(res => {
+        expect(res.body).toHaveLength(20);
+        expect(res.body[0]).toEqual({
+          course: expect.any(String),
+          _id: expect.any(String),
+          type: expect.any(String),
+          title: expect.any(String),
+          instructions: expect.any(String),
+          dateAvailable: expect.any(String),
+          dateDue: expect.any(String),
+          dateClosed: expect.any(String),
+          active: true
+        });
+      });
+
+  })
 
 });
