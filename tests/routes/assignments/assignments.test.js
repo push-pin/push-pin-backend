@@ -42,7 +42,8 @@ describe('assignment route tests', () => {
           dateAvailable: expect.any(String),
           dateDue: expect.any(String),
           dateClosed: expect.any(String),
-          active: true
+          active: true,
+          pointsPossible: 5
         });
       });
   });
@@ -62,7 +63,8 @@ describe('assignment route tests', () => {
           dateAvailable: expect.any(String),
           dateDue: expect.any(String),
           dateClosed: expect.any(String),
-          active: true
+          active: true,
+          pointsPossible: expect.any(Number)
         });
       });
   });
@@ -77,7 +79,8 @@ describe('assignment route tests', () => {
       dateAvailable: new Date(),
       dateDue: new Date(),
       dateClosed: new Date(),
-      active: false
+      active: false,
+      pointsPossible: 10
     });
     await Assignment.create({
       course: course[0]._id,
@@ -87,7 +90,8 @@ describe('assignment route tests', () => {
       dateAvailable: new Date(),
       dateDue: new Date(),
       dateClosed: new Date(),
-      active: false
+      active: false,
+      pointsPossible: 10
     });
     return request(app)
       .get(`/api/v1/assignments/course/inactive/${course[0]._id}`)
@@ -102,7 +106,8 @@ describe('assignment route tests', () => {
           dateAvailable: expect.any(String),
           dateDue: expect.any(String),
           dateClosed: expect.any(String),
-          active: false
+          active: false,
+          pointsPossible: expect.any(Number)
         });
       });
   });
@@ -115,7 +120,8 @@ describe('assignment route tests', () => {
       instructions: 'Read pages 1-10 and answer the questions',
       dateAvailable: new Date(),
       dateDue: new Date(),
-      dateClosed: new Date()
+      dateClosed: new Date(),
+      pointsPossible: 5
     });
     return request(app)
       .get(`/api/v1/assignments/${ass._id}`)
@@ -130,6 +136,7 @@ describe('assignment route tests', () => {
           dateAvailable: expect.any(String),
           dateDue: expect.any(String),
           dateClosed: expect.any(String),
+          pointsPossible: 5
         });
       });
   });
@@ -142,12 +149,14 @@ describe('assignment route tests', () => {
       instructions: 'Read pages 1-10 and answer the questions',
       dateAvailable: new Date(),
       dateDue: new Date(),
-      dateClosed: new Date()
+      dateClosed: new Date(),
+      pointsPossible: 5
     });
     return request(app)
       .patch(`/api/v1/assignments/${ass._id}`)
       .send({
-        title: 'Hello there!'
+        title: 'Hello there!',
+        pointsPossible: 10
       })
       .then(res => {
         expect(res.body).toEqual({
@@ -159,7 +168,8 @@ describe('assignment route tests', () => {
           dateAvailable: expect.any(String),
           dateDue: expect.any(String),
           dateClosed: expect.any(String),
-          active: true
+          active: true,
+          pointsPossible: 10
         });
       });
   });
