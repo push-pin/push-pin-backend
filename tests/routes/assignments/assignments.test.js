@@ -18,7 +18,7 @@ beforeEach(async() => {
 
 afterAll(() => mongoose.connection.close());
 
-describe('assignment route tests', () => {
+describe.only('assignment route tests', () => {
 
   it('create a new assignment', () => {
     return request(app)
@@ -160,6 +160,31 @@ describe('assignment route tests', () => {
           dateDue: expect.any(String),
           dateClosed: expect.any(String),
           active: true
+        });
+      });
+  });
+
+  it.only('gets all asses in one week', async() => {
+    const course = await Course.findOne();
+    const ass = await Assignment.create({
+      course: course._id,
+      type: 'reading',
+      title: 'Read this thing',
+      instructions: 'Read pages 1-10 and answer the questions',
+      dateAvailable: new Date(),
+      dateDue: new Date(),
+      dateClosed: new Date()
+    });
+    // const asses = await Assignment.find({ course: course._id });
+    // console.log(asses);
+    
+    return request(app)
+      .get(`/api/v1/assignments/weekataglance/${course._id}`)
+      .then(res => {
+        console.log(res.body);
+        expect(res.body).toEqual(expect.any(Array));
+        expect(res.body[0]).toEqual({
+          bla: 'bla'
         });
       });
   });
