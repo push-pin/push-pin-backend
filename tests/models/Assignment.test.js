@@ -9,7 +9,8 @@ describe('Assignment model', () => {
       course: new mongoose.Types.ObjectId,
       dateAvailable: new Date(),
       dateDue: new Date(),
-      dateClosed: new Date()
+      dateClosed: new Date(),
+      pointsPossible: 50
     });
 
     expect(assignment.toJSON()).toEqual({
@@ -20,7 +21,8 @@ describe('Assignment model', () => {
       course: expect.any(mongoose.Types.ObjectId),
       dateAvailable: expect.any(Date),
       dateDue: expect.any(Date),
-      dateClosed: expect.any(Date)
+      dateClosed: expect.any(Date),
+      pointsPossible: 50
     });
   });
 });

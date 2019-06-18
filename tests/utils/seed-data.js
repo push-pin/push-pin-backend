@@ -79,7 +79,8 @@ async function seedAsses(assCount = 20) {
     instructions: chance.sentence(),
     dateAvailable: chance.date(),
     dateDue: chance.date(),
-    dateClosed: chance.date()
+    dateClosed: chance.date(),
+    pointsPossible: chance.integer({ min : 5, max: 50 })
   }));
   return Assignment.create(asses);
 }
