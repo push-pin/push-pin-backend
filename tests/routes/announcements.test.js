@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const connect = require('../../lib/utils/connect');
 const { seedAnnouncements } = require('../utils/seed-data');
 const Course = require('../../lib/models/Course');
+const Announcement = require('../../lib/models/Announcement');
 
 jest.mock('../../lib/middleware/ensure-auth.js');
 
@@ -55,7 +56,25 @@ describe('announcement route tests', () => {
           body: expect.any(String),
           updatedAt: expect.any(String),
           createdAt: expect.any(String)
-        })
+        });
+      });
+  });
+
+  it('archives an announcement', async() => {
+    const ann = await Announcement.findOne();
+    return request(app)
+      .delete(`/api/v1/announcements/${ann._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          user: expect.any(String),
+          _id: expect.any(String),
+          course: expect.any(String),
+          active: false,
+          title: expect.any(String),
+          body: expect.any(String),
+          updatedAt: expect.any(String),
+          createdAt: expect.any(String)
+        });
       });
   });
 
