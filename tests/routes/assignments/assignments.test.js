@@ -198,18 +198,15 @@ describe.only('assignment route tests', () => {
         student: student._id,
         submission: 'my submission for the ass',
       });
-    // const asses = await Assignment.find({ course: course._id });
-    // console.log(asses);
     
     return request(app)
       .get(`/api/v1/assignments/weekataglance/course/${course._id}/student/${student._id}`)
       .then(res => {
-        console.log(res.body);
         expect(res.body).toEqual({
-          thisWeeksAsses: expect.any(Object),
+          weeksAsses: expect.any(Object),
           matchingSubs: expect.any(Array)
         });
-        expect(res.body.thisWeeksAsses).toEqual({
+        expect(res.body.weeksAsses).toEqual({
           mon: expect.any(Array),
           tues: expect.any(Array),
           wed: expect.any(Array),
