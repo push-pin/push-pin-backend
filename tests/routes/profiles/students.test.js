@@ -6,43 +6,18 @@ const connect = require('../../../lib/utils/connect');
 const { 
   seedStudents
 } = require('../../utils/seed-data');
+const Student = require('../../../lib/models/profiles/Student');
 
 jest.mock('../../../lib/middleware/ensure-auth.js');
 
 beforeAll(() => connect());
 
 beforeEach(() => mongoose.connection.dropDatabase());
-beforeEach(async() => {
-  return await Promise.all([seedStudents()]);
-});
+beforeEach(async() => seedStudents());
 
 afterAll(() => mongoose.connection.close());
 
 describe('student route tests', () => {
-
-  it('allows a teacher to sign up a new student', () => {
-    return request(app)
-      .post('/api/v1/students/')
-      .send({
-        'auth0id': '1234567890',
-        'firstName': 'Bonnie',
-        'lastName': 'McNeil',
-        'email': 'bonnie89@gmail.com',
-        'grader': new mongoose.Types.ObjectId
-      })
-      .then(res => {
-        expect(res.body).toEqual({
-          'firstName': 'Bonnie',
-          'lastName': 'McNeil',
-          'email': 'bonnie89@gmail.com',
-          'user': expect.any(String),
-          'grader': expect.any(String),
-          'pastCourses': [],
-          'attendance': 0,
-          '_id': expect.any(String)
-        });
-      });
-  });
 
   it('gets all students', () => {
     return request(app)
@@ -52,9 +27,32 @@ describe('student route tests', () => {
       });
   });
  
-  it('gets a student by id', () => {
-    //needs to get name, all grades for current course
-    //need to do assignments routes and seed data first 
-  });
+  it.only('gets a student by user id', async() => {
+    const student = await Student.findOne();
 
+    return request(app)
+      .get(`/api/v1/students/${student.user}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          student: { 
+            _id: expect.any(String), 
+            attendance: 0, 
+            currentCourse: expect.any(String), 
+            grader: expect.any(String), 
+            pastCourses: expect.any(Array), 
+            user: expect.any(String) 
+          }, 
+          user: {
+            _id: expect.any(String), 
+            auth0id: expect.any(String), 
+            email: expect.any(String), 
+            firstName: expect.any(String), 
+            image: '../..//assets/placeholder.png', 
+            lastName: expect.any(String), 
+            role: 'student' } });
+      });
+  });
+    
+  //needs to get name, all grades for current course
+  //need to do assignments routes and seed data first 
 });
