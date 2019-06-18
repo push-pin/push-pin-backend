@@ -13,9 +13,7 @@ jest.mock('../../../lib/middleware/ensure-auth.js');
 beforeAll(() => connect());
 
 beforeEach(() => mongoose.connection.dropDatabase());
-beforeEach(async() => {
-  return await Promise.all([seedSubmissions()]);
-});;
+beforeEach(async() => seedSubmissions());
 
 afterAll(() => mongoose.connection.close());
 
@@ -81,8 +79,29 @@ describe('submission route tests', () => {
         });
       });
   });  
+  // ************************************
+  // ************************************
+  // ************************************
+  it('gets all subs by ass id', async() => {
+    const ass = await Assignment.findOne();
 
-  it('gets all subs by student id', async() => {
+    return request(app)
+      .get(`/api/v1/submissions/assignment/${ass._id}`)
+      .then(res => {
+        expect(res.body).toEqual(expect.any(Array));
+        expect(res.body[0]).toEqual({
+          graded: expect.any(Boolean),
+          _id: expect.any(String),
+          assignment: expect.any(String),
+          student: expect.any(String),
+          submission: expect.any(String),
+          updatedAt: expect.any(String),
+          createdAt: expect.any(String)
+        });
+      });
+  });  
+
+  it('updates submission', async() => {
     const sub = await Submission.findOne();
 
     return request(app)
