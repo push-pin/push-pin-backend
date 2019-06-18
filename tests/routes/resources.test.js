@@ -7,6 +7,7 @@ const {
   seedResources
 } = require('../utils/seed-data');
 const Resource = require('../../lib/models/Resource');
+const Course = require('../../lib/models/Course');
 
 jest.mock('../../lib/middleware/ensure-auth.js');
 
@@ -102,6 +103,43 @@ describe('resource route tests', () => {
           user: expect.any(String),
           _id: expect.any(String),
           active: true,
+          type: 'video',
+          description: 'this explains it really well!',
+          info: {
+            author: 'Roald Dahl'
+          }
+        });
+      });
+  });
+
+  it('gets a resources by course id', async() => {
+    const course = await Course.create({
+      name: 'course 1',
+      term: 'this term',
+      startDate: new Date(),
+      endDate: new Date(),
+      courseType: 'BootCamp1'
+    });
+    // eslint-disable-next-line no-unused-vars
+    const res1 = await Resource.create({
+      course: course._id,
+      user: new mongoose.Types.ObjectId,
+      type: 'video',
+      description: 'this explains it really well!',
+      info: {
+        author: 'Roald Dahl'
+      }
+    });
+  
+    return request(app)
+      .get(`/api/v1/resources/course/${course._id}`)
+      .then(res => {
+        expect(res.body).toEqual(expect.any(Array));
+        expect(res.body[0]).toEqual({
+          course: expect.any(String),
+          user: expect.any(String),
+          _id: expect.any(String),
+          active: expect.any(Boolean),
           type: 'video',
           description: 'this explains it really well!',
           info: {
