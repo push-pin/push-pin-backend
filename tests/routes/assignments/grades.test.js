@@ -3,9 +3,10 @@ const request = require('supertest');
 const app = require('../../../lib/app');
 const mongoose = require('mongoose');
 const connect = require('../../../lib/utils/connect');
-const { seedGrades } = require('../../utils/seed-data');
+const { seedGrades, seedGradesForAgg } = require('../../utils/seed-data');
 const Grade = require('../../../lib/models/assignments/Grade');
 const Submission = require('../../../lib/models/assignments/Submission');
+const Course = require('../../../lib/models/Course');
 
 jest.mock('../../../lib/middleware/ensure-auth.js');
 
@@ -77,6 +78,17 @@ describe('grade route tests', () => {
       .get('/api/v1/grades/assignments')
       .then(res => {
         expect(res.body).toHaveLength(2);
+      });
+  });
+
+  it.only('gets all grades for a course grouped by assignment', async() => {
+    await seedGradesForAgg();
+    await seedGradesForAgg();
+    const course = await Course.findOne();
+    return request(app)
+      .get(`/api/v1/grades/assignments/${course._id}`)
+      .then(res => {
+        console.log(res.body);
       });
   });
 

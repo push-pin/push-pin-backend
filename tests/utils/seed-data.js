@@ -107,6 +107,44 @@ async function seedGrades(count = 100) {
   return Grade.create(grades);
 }
 
+async function seedAssesForAgg(assCount = 20) {
+  const courses = await seedCourses(2);
+  const types = ['reading', 'solo', 'mob'];
+  const asses = [...Array(assCount)].map(() => ({
+    course: chance.pickone(courses),
+    type: chance.pickone(types),
+    title: chance.word(),
+    instructions: chance.sentence(),
+    dateAvailable: chance.date(),
+    dateDue: chance.date(),
+    dateClosed: chance.date(),
+    pointsPossible: chance.integer({ min : 5, max: 50 })
+  }));
+  return Assignment.create(asses);
+}
+
+async function seedSubmissionsForAgg(count = 50) {
+  const asses = await seedAssesForAgg(4);
+  const users = await seedUsers(1, STUDENT);
+  const subs = [...Array(count)].map(() => ({
+    assignment: chance.pickone(asses),
+    student: chance.pickone(users),
+    submission: chance.sentence()
+  }));
+  return Submission.create(subs);
+}
+
+async function seedGradesForAgg(count = 50) {
+  const graders = await seedUsers(5, TA);
+  const subs = await seedSubmissionsForAgg(count);
+  const grades = [...Array(count)].map((_, i) => ({
+    submission: subs[i],
+    grade: chance.integer({ min: 0, max: 110 }),
+    grader: chance.pickone(graders)
+  }));
+  return Grade.create(grades);
+}
+
 async function seedComments(count = 25) {
   const users = await seedUsers(5, TA);
   const subs = await seedSubmissions(5);
@@ -157,5 +195,6 @@ module.exports = {
   seedGrades,
   seedComments,
   seedResources,
-  seedAnnouncements
+  seedAnnouncements,
+  seedGradesForAgg
 };
