@@ -23,7 +23,7 @@ afterAll(() => mongoose.connection.close());
 
 describe('student route tests', () => {
 
-  it.only('signs up new student', async() => {
+  it('signs up new student', async() => {
     const course = await Course.findOne();
     const ta = await User.findOne();
 

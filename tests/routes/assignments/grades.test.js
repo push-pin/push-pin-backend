@@ -71,4 +71,13 @@ describe('grade route tests', () => {
       });
   });
 
+  it('gets all grades grouped by assignment', async() => {
+    await seedGrades();
+    return request(app)
+      .get('/api/v1/grades/assignments')
+      .then(res => {
+        expect(res.body).toHaveLength(2);
+      });
+  });
+
 });
