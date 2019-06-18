@@ -3,22 +3,27 @@ const request = require('supertest');
 const app = require('../../../lib/app');
 const mongoose = require('mongoose');
 const connect = require('../../../lib/utils/connect');
-const { seedAsses } = require('../../utils/seed-data');
+const { seedAsses, seedStudents } = require('../../utils/seed-data');
 const Assignment = require('../../../lib/models/assignments/Assignment');
 const Course = require('../../../lib/models/Course');
+const Submission = require('../../../lib/models/assignments/Submission');
+const Student = require('../../../lib/models/profiles/Student');
 
 jest.mock('../../../lib/middleware/ensure-auth.js');
 
 beforeAll(() => connect());
 
 beforeEach(() => mongoose.connection.dropDatabase());
-beforeEach(async() => {
-  return await Promise.all([seedAsses()]);
+beforeEach(() => {
+  return Promise.all([
+    seedAsses(),
+    seedStudents()
+  ]);
 });
 
 afterAll(() => mongoose.connection.close());
 
-describe('assignment route tests', () => {
+describe.only('assignment route tests', () => {
 
   it('create a new assignment', () => {
     return request(app)
@@ -174,4 +179,49 @@ describe('assignment route tests', () => {
       });
   });
 
+  it.only('gets all asses in one week', async() => {
+    const course = await Course.findOne();
+    const ass = await Assignment.create({
+      course: course._id,
+      type: 'reading',
+      title: 'Read this thing',
+      instructions: 'Read pages 1-10 and answer the questions',
+      dateAvailable: new Date(),
+      dateDue: new Date(),
+      dateClosed: new Date()
+    });
+    const student = await Student.findOne();
+    // eslint-disable-next-line no-unused-vars
+    const sub = await Submission
+      .create({
+        assignment: ass._id,
+        student: student._id,
+        submission: 'my submission for the ass',
+      });
+    
+    return request(app)
+      .get(`/api/v1/assignments/weekataglance/course/${course._id}/student/${student._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          weeksAsses: expect.any(Object),
+          matchingSubs: expect.any(Array)
+        });
+        expect(res.body.weeksAsses).toEqual({
+          mon: expect.any(Array),
+          tues: expect.any(Array),
+          wed: expect.any(Array),
+          thurs: expect.any(Array),
+          fri: expect.any(Array)
+        });
+        expect(res.body.matchingSubs[0]).toEqual({
+          graded: false,
+          _id: expect.any(String),
+          assignment: expect.any(String),
+          student: expect.any(String),
+          submission: expect.any(String),
+          updatedAt: expect.any(String),
+          createdAt: expect.any(String)
+        });
+      });
+  });
 });
