@@ -9,6 +9,7 @@ const Assignment = require('../../lib/models/assignments/Assignment');
 const Submission = require('../../lib/models/assignments/Submission');
 const Grade = require('../../lib/models/assignments/Grade');
 const Comment = require('../../lib/models/assignments/Comment');
+const Announcement = require('../../lib/models/Announcement');
 const { TEACHER, TA, STUDENT } = require('../../lib/models/userRoles');
 
 function seedUsers(userCount = 10, ...type) {
@@ -132,6 +133,18 @@ async function seedResources(count = 10) {
   return Resource.create(resources);
 }
 
+async function seedAnnouncements(count = 25) {
+  const users = await seedUsers(5, TEACHER); 
+  const courses = await seedCourses(1);
+  const announcements = [...Array(count)].map(() => ({
+    course: chance.pickone(courses),
+    user: chance.pickone(users),
+    title: `Alchemy got a new pet ${chance.animal()}`,
+    body: chance.sentence()
+  }));
+  return Announcement.create(announcements);
+}
+
 module.exports = {
   seedStudents,
   seedTAs,
@@ -142,5 +155,6 @@ module.exports = {
   seedSubmissions,
   seedGrades,
   seedComments,
-  seedResources
+  seedResources,
+  seedAnnouncements
 };
