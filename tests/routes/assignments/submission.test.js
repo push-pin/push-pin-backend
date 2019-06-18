@@ -79,9 +79,7 @@ describe('submission route tests', () => {
         });
       });
   });  
-  // ************************************
-  // ************************************
-  // ************************************
+
   it('gets all subs by ass id', async() => {
     const ass = await Assignment.findOne();
 
