@@ -52,4 +52,24 @@ describe('grade route tests', () => {
       });
   });
 
+  it('updates a grade by grade id', async() => {
+    const grade = await Grade.create({
+      submission: new mongoose.Types.ObjectId,
+      grade: 98,
+      grader: new mongoose.Types.ObjectId
+    });
+    return request(app)
+      .patch(`/api/v1/grades/${grade._id}`)
+      .send({ grade: 50 })
+      .then(res => {
+        console.log(res.body);
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          submission: expect.any(String),
+          grader: expect.any(String),
+          grade: 50
+        });
+      });
+  });
+
 });
