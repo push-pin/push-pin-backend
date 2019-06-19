@@ -66,7 +66,7 @@ describe('resource route tests', () => {
       info: {
         author: 'Roald Dahl'
       },
-      active: false
+      active: false 
     });
     await Resource.create({
       course: new mongoose.Types.ObjectId,
