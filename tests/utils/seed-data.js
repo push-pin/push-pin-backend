@@ -86,20 +86,21 @@ async function seedAsses(assCount = 20) {
   return Assignment.create(asses);
 }
 
-async function seedSubmissions(count = 100) {
-  const asses = await seedAsses(1);
-  const users = await seedUsers(1, STUDENT);
+async function seedSubmissions(count = 100, graded = false) {
+  const asses = await seedAsses(4);
+  const users = await seedUsers(10, STUDENT);
   const subs = [...Array(count)].map(() => ({
     assignment: chance.pickone(asses),
     student: chance.pickone(users),
-    submission: chance.sentence()
+    submission: chance.sentence(),
+    graded
   }));
   return Submission.create(subs);
 }
 
 async function seedGrades(count = 100) {
   const graders = await seedUsers(5, TA);
-  const subs = await seedSubmissions(count);
+  const subs = await seedSubmissions(count, true);
   const grades = [...Array(count)].map((_, i) => ({
     submission: subs[i],
     grade: chance.integer({ min: 0, max: 110 }),
