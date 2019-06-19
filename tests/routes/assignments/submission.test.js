@@ -82,7 +82,6 @@ describe('submission route tests', () => {
 
   it('gets all subs by ass id', async() => {
     const ass = await Assignment.findOne();
-
     return request(app)
       .get(`/api/v1/submissions/assignment/${ass._id}`)
       .then(res => {
@@ -91,7 +90,15 @@ describe('submission route tests', () => {
           graded: expect.any(Boolean),
           _id: expect.any(String),
           assignment: expect.any(String),
-          student: expect.any(String),
+          student: {
+            _id: expect.any(String),
+            image: '../..//assets/placeholder.png',
+            auth0id: expect.any(String),
+            role: 'student',
+            firstName: expect.any(String),
+            lastName: expect.any(String),
+            email: expect.any(String)
+          },
           submission: expect.any(String),
           updatedAt: expect.any(String),
           createdAt: expect.any(String)
