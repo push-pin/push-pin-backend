@@ -81,14 +81,18 @@ describe('grade route tests', () => {
       });
   });
 
-  it.only('gets all grades for a course grouped by assignment', async() => {
+  it('gets all grades for a course grouped by assignment', async() => {
     await seedGradesForAgg();
     await seedGradesForAgg();
     const course = await Course.findOne();
     return request(app)
       .get(`/api/v1/grades/assignments/${course._id}`)
       .then(res => {
-        console.log(res.body);
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          title: expect.any(String),
+          grades: expect.any(Array)
+        })
       });
   });
 
