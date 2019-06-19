@@ -86,7 +86,7 @@ describe('grade route tests', () => {
     return request(app)
       .get('/api/v1/grades/assignments')
       .then(res => {
-        expect(res.body).toHaveLength(2);
+        expect(res.body).toHaveLength(8);
       });
   });
 

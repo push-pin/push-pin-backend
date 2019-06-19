@@ -61,7 +61,7 @@ describe('submission route tests', () => {
       });
   });  
 
-  it.only('gets all subs by student id', async() => {
+  it('gets all subs by student id', async() => {
     await mongoose.connection.dropDatabase(); 
     await seedGrades();
     const student = await User.findOne({ role: 'student' }); 
