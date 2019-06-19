@@ -19,26 +19,26 @@ afterAll(() => mongoose.connection.close());
 
 describe('tas route tests', () => {
 
-  it('sign up a new ta', () => {
-    return request(app)
-      .post('/api/v1/tas')
-      .send({
-        'auth0id': '1234567890',
-        'firstName': 'Bonnie',
-        'lastName': 'McNeil',
-        'email': 'bonnie1@gmail.com'
-      })
-      .then(res => {
-        expect(res.body).toEqual({
-          'firstName': 'Bonnie',
-          'lastName': 'McNeil',
-          'email': 'bonnie1@gmail.com',
-          'user': expect.any(String),
-          'pastCourses': [],
-          '_id': expect.any(String)
-        });
-      });
-  });
+  // it('sign up a new ta', () => {
+  //   return request(app)
+  //     .post('/api/v1/tas')
+  //     .send({
+  //       'auth0id': '1234567890',
+  //       'firstName': 'Bonnie',
+  //       'lastName': 'McNeil',
+  //       'email': 'bonnie1@gmail.com'
+  //     })
+  //     .then(res => {
+  //       expect(res.body).toEqual({
+  //         'firstName': 'Bonnie',
+  //         'lastName': 'McNeil',
+  //         'email': 'bonnie1@gmail.com',
+  //         'user': expect.any(String),
+  //         'pastCourses': [],
+  //         '_id': expect.any(String)
+  //       });
+  //     });
+  // });
 
   it('gets a list of teaching assistants', () => {
     return request(app)
@@ -54,7 +54,7 @@ describe('tas route tests', () => {
       });
   });
 
-  it.only('updates a teaching assistant\'s current course', async() => {
+  it('updates a teaching assistant\'s current course', async() => {
     const newTA = await TeacherAssistant.findOne();
     return request(app)
       .patch(`/api/v1/tas/${newTA._id}`)
