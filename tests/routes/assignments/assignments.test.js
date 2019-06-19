@@ -188,7 +188,8 @@ describe.only('assignment route tests', () => {
       instructions: 'Read pages 1-10 and answer the questions',
       dateAvailable: new Date(),
       dateDue: new Date(),
-      dateClosed: new Date()
+      dateClosed: new Date(),
+      pointsPossible: 10
     });
     const student = await Student.findOne();
     // eslint-disable-next-line no-unused-vars

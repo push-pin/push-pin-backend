@@ -90,8 +90,12 @@ describe('grade route tests', () => {
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
-          title: expect.any(String),
-          grades: expect.any(Array)
+          assignments: expect.any(Array)
+        });
+        expect(res.body.assignments[0]).toEqual({
+          _id: expect.any(String),
+          grades: expect.any(Array),
+          course: expect.any(Array),
         })
       });
   });
