@@ -7,7 +7,7 @@ const { seedAsses, seedStudents } = require('../../utils/seed-data');
 const Assignment = require('../../../lib/models/assignments/Assignment');
 const Course = require('../../../lib/models/Course');
 const Submission = require('../../../lib/models/assignments/Submission');
-const Student = require('../../../lib/models/profiles/Student');
+const User = require('../../../lib/models/profiles/User');
 
 jest.mock('../../../lib/middleware/ensure-auth.js');
 
@@ -23,7 +23,7 @@ beforeEach(() => {
 
 afterAll(() => mongoose.connection.close());
 
-describe.only('assignment route tests', () => {
+describe('assignment route tests', () => {
 
   it('create a new assignment', () => {
     return request(app)
@@ -179,29 +179,11 @@ describe.only('assignment route tests', () => {
       });
   });
 
-  it.only('gets all asses in one week', async() => {
-    const course = await Course.findOne();
-    const ass = await Assignment.create({
-      course: course._id,
-      type: 'reading',
-      title: 'Read this thing',
-      instructions: 'Read pages 1-10 and answer the questions',
-      dateAvailable: new Date(),
-      dateDue: new Date(),
-      dateClosed: new Date(),
-      pointsPossible: 10
-    });
-    const student = await Student.findOne();
-    // eslint-disable-next-line no-unused-vars
-    const sub = await Submission
-      .create({
-        assignment: ass._id,
-        student: student._id,
-        submission: 'my submission for the ass',
-      });
+  it('gets all asses in one week', async() => {
+    const CAUS = await createCAUS();
     
     return request(app)
-      .get(`/api/v1/assignments/weekataglance/course/${course._id}/student/${student._id}`)
+      .get(`/api/v1/assignments/weekataglance/course/${CAUS.course._id}/student/${CAUS.user._id}`)
       .then(res => {
         expect(res.body).toEqual({
           weeksAsses: expect.any(Object),
@@ -225,4 +207,70 @@ describe.only('assignment route tests', () => {
         });
       });
   });
+
+  it('gets all asses in course and subs by user in course', async() => {
+    const CAUS = await createCAUS();
+    return request(app)
+      .get(`/api/v1/assignments/courseassignments/course/${CAUS.course._id}/student/${CAUS.user._id}`)
+      .then(res => {
+        expect(res.body.asses).toEqual(expect.any(Array));
+        expect(res.body.subs).toEqual(expect.any(Array));
+        expect(res.body.asses[0]).toEqual({
+          _id: expect.any(String),
+          active: expect.any(Boolean),
+          course: expect.any(String),
+          dateAvailable: expect.any(String),
+          dateClosed: expect.any(String),
+          dateDue: expect.any(String),
+          instructions: expect.any(String),
+          pointsPossible: expect.any(Number),
+          title: expect.any(String),
+          type: expect.any(String),
+        });
+        expect(res.body.subs[0]).toEqual({
+          _id: expect.any(String),
+          graded: false,
+          assignment: {
+            _id: expect.any(String),
+            active: true,
+            course: expect.any(String),
+            type: expect.any(String),
+            title: expect.any(String),
+            instructions: expect.any(String),
+            dateAvailable: expect.any(String),
+            dateDue: expect.any(String),
+            dateClosed: expect.any(String),
+            pointsPossible: expect.any(Number)
+          },
+          student: expect.any(String),
+          submission: expect.any(String),
+          updatedAt: expect.any(String),
+          createdAt: expect.any(String)
+        });
+      });
+  });
 });
+
+
+const createCAUS = async() => {
+  const course = await Course.findOne();
+  const ass = await Assignment.create({
+    course: course._id,
+    type: 'reading',
+    title: 'Read this thing',
+    instructions: 'Read pages 1-10 and answer the questions',
+    dateAvailable: new Date(),
+    dateDue: new Date(),
+    dateClosed: new Date(),
+    pointsPossible: 10
+  });
+  const user = await User.findOne();
+  // eslint-disable-next-line no-unused-vars
+  const sub = await Submission
+    .create({
+      assignment: ass._id,
+      student: user._id,
+      submission: 'my submission for the ass',
+    });
+  return { course, ass, user, sub };
+};
