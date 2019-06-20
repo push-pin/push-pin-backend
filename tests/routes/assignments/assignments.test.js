@@ -229,6 +229,7 @@ describe('assignment route tests', () => {
           _id: expect.any(String),
           active: expect.any(Boolean),
           course: expect.any(String),
+          classDate: expect.any(String),
           dateAvailable: expect.any(String),
           dateClosed: expect.any(String),
           dateDue: expect.any(String),
@@ -247,6 +248,7 @@ describe('assignment route tests', () => {
             type: expect.any(String),
             title: expect.any(String),
             instructions: expect.any(String),
+            classDate: expect.any(String),
             dateAvailable: expect.any(String),
             dateDue: expect.any(String),
             dateClosed: expect.any(String),
@@ -270,6 +272,7 @@ const createCAUS = async() => {
     title: 'Read this thing',
     instructions: 'Read pages 1-10 and answer the questions',
     dateAvailable: new Date(),
+    classDate: new Date(),
     dateDue: new Date(),
     dateClosed: new Date(),
     pointsPossible: 10
