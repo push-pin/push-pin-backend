@@ -150,4 +150,31 @@ describe('grade route tests', () => {
       });
   });
 
+  it('gets all of a student\'s grades', async() => {
+    const student = await User.findOne({ role: 'student' });
+    return request(app)
+      .get(`/api/v1/grades/student/recent/${student._id}`)
+      .then(res => {
+        expect(res.body[0]).toEqual({
+          _id: expect.any(String),
+          submission: {
+            _id: expect.any(String),
+            graded: expect.any(Boolean),
+            assignment: expect.any(String),
+            student: expect.any(String),
+            submission:expect.any(String),
+            updatedAt: expect.any(String),
+            createdAt: expect.any(String),
+          },
+          grade: expect.any(Number),
+          grader: expect.any(String),
+          updatedAt: expect.any(String),
+          createdAt: expect.any(String),
+          student: expect.any(Object),
+          assignment: expect.any(Object),
+        });
+        expect(res.body[0].submission.student).toEqual(student._id.toString())
+      });
+  });
+
 });
