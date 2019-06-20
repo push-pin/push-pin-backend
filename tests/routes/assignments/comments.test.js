@@ -59,7 +59,7 @@ describe('comment route tests', () => {
       });
   });
     
-  it.only('gets 20 most recent comments on a student\'s submission', async() => {
+  it('gets 20 most recent comments on a student\'s submission', async() => {
     await seed();
     const student = await User.findOne({ role: 'student', auth0id: '12345abc' });
     const teacher = await User.findOne({ role: 'teacher', auth0id: 'hot_teacher' });
