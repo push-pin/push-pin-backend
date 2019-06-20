@@ -41,7 +41,7 @@ describe('grade route tests', () => {
           updatedAt: expect.any(String),
           createdAt: expect.any(String)
         });
-      });
+      }); 
   }); 
 
   it('gets the grade for a submission', async() => {
