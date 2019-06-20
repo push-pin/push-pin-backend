@@ -142,8 +142,15 @@ describe('submission route tests', () => {
         expect(res.body[0]).toEqual({
           graded: expect.any(Boolean),
           _id: expect.any(String),
-          assignment: expect.any(String),
-          student: expect.any(String),
+          assignment: {
+            _id: expect.any(String),
+            title: expect.any(String)
+          },
+          student: {
+            _id: expect.any(String),
+            firstName: expect.any(String),
+            lastName: expect.any(String),
+          },
           submission: expect.any(String),
           updatedAt: expect.any(String),
           createdAt: expect.any(String)
