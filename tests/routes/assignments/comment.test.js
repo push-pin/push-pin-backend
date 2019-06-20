@@ -44,6 +44,12 @@ describe('comment route tests', () => {
     
     return request(app)
       .get(`/api/v1/comments/${submission._id}`)
+      .send({
+        pushPinUser: {
+          role: 'student',
+          _id: submission.student
+        }
+      })
       .then(res => {
         expect(res.body).toEqual(expect.any(Array));
         expect(res.body[0]).toEqual({

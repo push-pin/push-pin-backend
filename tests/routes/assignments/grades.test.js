@@ -37,7 +37,9 @@ describe('grade route tests', () => {
           _id: expect.any(String),
           submission: expect.any(String),
           grader: expect.any(String),
-          grade: 98
+          grade: 98,
+          updatedAt: expect.any(String),
+          createdAt: expect.any(String)
         });
       });
   }); 
@@ -51,7 +53,9 @@ describe('grade route tests', () => {
           _id: expect.any(String),
           submission: expect.any(String),
           grader: expect.any(String),
-          grade: expect.any(Number)
+          grade: expect.any(Number),
+          updatedAt: expect.any(String),
+          createdAt: expect.any(String)
         });
       });
   });
@@ -70,7 +74,9 @@ describe('grade route tests', () => {
           _id: expect.any(String),
           submission: expect.any(String),
           grader: expect.any(String),
-          grade: 50
+          grade: 50,
+          updatedAt: expect.any(String),
+          createdAt: expect.any(String)
         });
       });
   });
@@ -80,7 +86,7 @@ describe('grade route tests', () => {
     return request(app)
       .get('/api/v1/grades/assignments')
       .then(res => {
-        expect(res.body).toHaveLength(2);
+        expect(res.body).toHaveLength(8);
       });
   });
 

@@ -6,7 +6,7 @@ const connect = require('../../../lib/utils/connect');
 const Assignment = require('../../../lib/models/assignments/Assignment');
 const User = require('../../../lib/models/profiles/User');
 const Submission = require('../../../lib/models/assignments/Submission');
-const { seedSubmissions } = require('../../utils/seed-data');
+const { seedSubmissions, seedGrades } = require('../../utils/seed-data');
 
 jest.mock('../../../lib/middleware/ensure-auth.js');
 
@@ -62,20 +62,25 @@ describe('submission route tests', () => {
   });  
 
   it('gets all subs by student id', async() => {
-    const student = await User.findOne();
+    await mongoose.connection.dropDatabase(); 
+    await seedGrades();
+    const student = await User.findOne({ role: 'student' }); 
 
     return request(app)
       .get(`/api/v1/submissions/student/${student._id}`)
       .then(res => {
         expect(res.body).toEqual(expect.any(Array));
         expect(res.body[0]).toEqual({
-          graded: false,
-          _id: expect.any(String),
-          assignment: expect.any(String),
-          student: expect.any(String),
-          submission: expect.any(String),
-          updatedAt: expect.any(String),
-          createdAt: expect.any(String)
+          submission: {
+            graded: true, 
+            _id: expect.any(String),
+            assignment: expect.any(String),
+            student: expect.any(String),
+            submission: expect.any(String),
+            updatedAt: expect.any(String),
+            createdAt: expect.any(String)
+          },
+          grade: expect.any(Object)
         });
       });
   });  
