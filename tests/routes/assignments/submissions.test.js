@@ -3,6 +3,7 @@ const request = require('supertest');
 const app = require('../../../lib/app');
 const mongoose = require('mongoose');
 const connect = require('../../../lib/utils/connect');
+const Course = require('../../../lib/models/Course');
 const Assignment = require('../../../lib/models/assignments/Assignment');
 const User = require('../../../lib/models/profiles/User');
 const Submission = require('../../../lib/models/assignments/Submission');
@@ -130,7 +131,25 @@ describe('submission route tests', () => {
           createdAt: expect.any(String)
         });
       });
-  });  
+  });
+
+  it.only('gets 20 most recently submitted assignments for a course', async() => {
+    const course = await Course.findOne();
+    return request(app)
+      .get(`/api/v1/submissions/recent/${course._id}`)
+      .then(res => {
+        expect(res.body).toHaveLength(20);
+        expect(res.body[0]).toEqual({
+          graded: expect.any(Boolean),
+          _id: expect.any(String),
+          assignment: expect.any(String),
+          student: expect.any(String),
+          submission: expect.any(String),
+          updatedAt: expect.any(String),
+          createdAt: expect.any(String)
+        });
+      });
+  });
 
   
 });
