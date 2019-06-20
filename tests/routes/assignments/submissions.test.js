@@ -133,7 +133,7 @@ describe('submission route tests', () => {
       });
   });
 
-  it.only('gets 20 most recently submitted assignments for a course', async() => {
+  it('gets 20 most recently submitted assignments for a course', async() => {
     const course = await Course.findOne();
     return request(app)
       .get(`/api/v1/submissions/recent/${course._id}`)
