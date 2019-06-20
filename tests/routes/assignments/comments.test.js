@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const connect = require('../../../lib/utils/connect');
 const { seedComments } = require('../../utils/seed-data');
 const Submission = require('../../../lib/models/assignments/Submission');
+const User = require('../../../lib/models/profiles/User');
+const { seed } = require('../../utils/seedCommentsForRecent');
 
 jest.mock('../../../lib/middleware/ensure-auth.js');
 
@@ -44,12 +46,6 @@ describe('comment route tests', () => {
     
     return request(app)
       .get(`/api/v1/comments/${submission._id}`)
-      .send({
-        pushPinUser: {
-          role: 'student',
-          _id: submission.student
-        }
-      })
       .then(res => {
         expect(res.body).toEqual(expect.any(Array));
         expect(res.body[0]).toEqual({
@@ -62,6 +58,22 @@ describe('comment route tests', () => {
         });
       });
   });
+    
+  it.only('gets 20 most recent comments on a student\'s submission', async() => {
+    await seed();
+    const student = await User.findOne({ role: 'student', auth0id: '12345abc' });
+    const teacher = await User.findOne({ role: 'teacher', auth0id: 'hot_teacher' });
+    
+    return request(app)
+      .get(`/api/v1/comments/recent/${student._id}`)
+      .then(res => {
+        expect(res.body).toHaveLength(20);
+        res.body.forEach(comment => {
+          expect(comment.commenter).toEqual(teacher._id.toString());
+        });
+      });
+  });
+
 });
 
 
