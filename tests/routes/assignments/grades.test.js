@@ -173,7 +173,29 @@ describe('grade route tests', () => {
           student: expect.any(Object),
           assignment: expect.any(Object),
         });
-        expect(res.body[0].submission.student).toEqual(student._id.toString())
+        expect(res.body[0].submission.student).toEqual(student._id.toString());
+      });
+  });
+
+  it('gets 20 most recent grades for a course', async() => {
+    const course = await Course.findOne();
+    return request(app)
+      .get(`/api/v1/grades/recent/${course._id}`)
+      .then(res => {
+        expect(res.body).toHaveLength(20);
+        expect(res.body[0]).toEqual({ 
+          _id: expect.any(String),
+          submission: expect.any(Object),
+          grade: expect.any(Number),
+          grader: expect.any(String),
+          updatedAt: expect.any(String),
+          createdAt: expect.any(String),
+          assignment: expect.any(Object),
+          course: expect.any(Object)
+        });
+        res.body.forEach(grade => {
+          expect(grade.course._id).toEqual(course._id.toString());
+        });
       });
   });
 
