@@ -15,9 +15,6 @@ jest.mock('../../../lib/middleware/ensure-auth.js');
 beforeAll(() => connect());
 
 beforeEach(() => mongoose.connection.dropDatabase());
-// beforeEach(async() => {
-//   return await Promise.all([seedTAs()]);
-// });
 
 afterAll(() => mongoose.connection.close());
 
@@ -88,5 +85,4 @@ describe('user route tests', () => {
         });
       });
   });
-
 });
