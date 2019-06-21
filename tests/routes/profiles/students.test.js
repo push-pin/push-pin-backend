@@ -7,10 +7,6 @@ const {
   seedStudents
 } = require('../../utils/seed-data');
 const Student = require('../../../lib/models/profiles/Student');
-const Course = require('../../../lib/models/Course');
-const User = require('../../../lib/models/profiles/User');
-const chance = require('chance').Chance();
-
 
 jest.mock('../../../lib/middleware/ensure-auth.js');
 
@@ -22,43 +18,6 @@ beforeEach(async() => seedStudents());
 afterAll(() => mongoose.connection.close());
 
 describe('student route tests', () => {
-
-  ////////travis hates this one
-  // it('signs up new student', async() => {
-  //   const course = await Course.findOne();
-  //   const ta = await User.findOne();
-
-  //   return request(app)
-  //     .post('/api/v1/students')
-  //     .send({
-  //       firstName: 'person',
-  //       lastName: 'a-la-person',
-  //       email: chance.email(),
-  //       currentCourse: course._id,
-  //       grader: ta._id
-  //     })
-  //     .then(res => {
-  //       expect(res.body).toEqual({
-  //         user: {
-  //           image: '../..//assets/placeholder.png',
-  //           _id: expect.any(String),
-  //           auth0id: expect.any(String),
-  //           firstName: 'person',
-  //           lastName: 'a-la-person',
-  //           email: expect.any(String),
-  //           role: 'student'
-  //         },
-  //         student: {
-  //           pastCourses: [],
-  //           attendance: 0,
-  //           _id: expect.any(String),
-  //           user: expect.any(String),
-  //           currentCourse: expect.any(String),
-  //           grader: expect.any(String)
-  //         }
-  //       });
-  //     });
-  // });
  
   it('gets all students', () => {
     return request(app)
@@ -93,7 +52,4 @@ describe('student route tests', () => {
             role: 'student' } });
       });
   });
-    
-  //needs to get name, all grades for current course
-  //need to do assignments routes and seed data first 
 });

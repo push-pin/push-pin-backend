@@ -205,5 +205,4 @@ describe('resource route tests', () => {
         });
       });
   });
-
 });
