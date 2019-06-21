@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const chance = require('chance').Chance();
 const User = require('../../lib/models/profiles/User');
 const Submission = require('../../lib/models/assignments/Submission');
+const Assignment = require('../../lib/models/assignments/Assignment');
 const Comment = require('../../lib/models/assignments/Comment');
 const { TEACHER, STUDENT } = require('../../lib/models/userRoles');
 
@@ -39,20 +40,32 @@ async function seed() {
     email: chance.email()
   });
 
+  const ass = await Assignment.create({
+    course: new mongoose.Types.ObjectId,
+    type: 'reading',
+    title: 'React Reading',
+    instructions: chance.sentence(),
+    classDate: chance.date(),
+    dateAvailable: chance.date(),
+    dateDue: chance.date(),
+    dateClosed: chance.date(),
+    pointsPossible: 6
+  })
+
   const submission1 = await Submission.create({
-    assignment: new mongoose.Types.ObjectId(),
+    assignment: ass._id,
     student: student._id,
     submission: chance.sentence()
   });
 
   const submission2 = await Submission.create({
-    assignment: new mongoose.Types.ObjectId(),
+    assignment: ass._id,
     student: student._id,
     submission: chance.sentence()
   });
 
   const submission3 = await Submission.create({
-    assignment: new mongoose.Types.ObjectId(),
+    assignment: ass._id,
     student: student._id,
     submission: chance.sentence()
   });

@@ -52,7 +52,7 @@ describe('comment route tests', () => {
           _id: expect.any(String),
           submission: expect.any(String),
           comment: expect.any(String),
-          commenter: expect.any(String),
+          commenter: expect.any(Object),
           updatedAt: expect.any(String),
           createdAt: expect.any(String)
         });
@@ -63,13 +63,20 @@ describe('comment route tests', () => {
     await seed();
     const student = await User.findOne({ role: 'student', auth0id: '12345abc' });
     const teacher = await User.findOne({ role: 'teacher', auth0id: 'hot_teacher' });
-    
     return request(app)
       .get(`/api/v1/comments/recent/${student._id}`)
       .then(res => {
         expect(res.body).toHaveLength(20);
         res.body.forEach(comment => {
-          expect(comment.commenter).toEqual(teacher._id.toString());
+          expect(comment).toEqual({
+            _id: expect.any(String),
+            submission: expect.any(Object),
+            comment: expect.any(String),
+            commenter: expect.any(Object),
+            updatedAt: expect.any(String),
+            createdAt: expect.any(String)
+          });
+          expect(comment.commenter._id).toEqual(teacher._id.toString());
         });
       });
   });
