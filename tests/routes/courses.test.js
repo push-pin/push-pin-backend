@@ -142,7 +142,5 @@ describe('ourses route tests', () => {
           active: false
         });
       });
-
   });
-
 });

@@ -19,27 +19,6 @@ afterAll(() => mongoose.connection.close());
 
 describe('tas route tests', () => {
 
-  // it('sign up a new ta', () => {
-  //   return request(app)
-  //     .post('/api/v1/tas')
-  //     .send({
-  //       'auth0id': '1234567890',
-  //       'firstName': 'Bonnie',
-  //       'lastName': 'McNeil',
-  //       'email': 'bonnie1@gmail.com'
-  //     })
-  //     .then(res => {
-  //       expect(res.body).toEqual({
-  //         'firstName': 'Bonnie',
-  //         'lastName': 'McNeil',
-  //         'email': 'bonnie1@gmail.com',
-  //         'user': expect.any(String),
-  //         'pastCourses': [],
-  //         '_id': expect.any(String)
-  //       });
-  //     });
-  // });
-
   it('gets a list of teaching assistants', () => {
     return request(app)
       .get('/api/v1/tas')
@@ -69,8 +48,5 @@ describe('tas route tests', () => {
           '_id': expect.any(String)
         });
       });
-     
   });
-
-
 });

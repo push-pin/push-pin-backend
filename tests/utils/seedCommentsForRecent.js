@@ -1,6 +1,5 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const connect = require('../../lib/utils/connect');
 const chance = require('chance').Chance();
 const User = require('../../lib/models/profiles/User');
 const Submission = require('../../lib/models/assignments/Submission');

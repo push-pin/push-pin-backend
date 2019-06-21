@@ -46,6 +46,4 @@ describe('teachers route tests', () => {
         expect(res.body).toHaveLength(4);
       });
   });
-
-
 });
